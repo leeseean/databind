@@ -1,28 +1,4 @@
-class Observe {
-    constructor(data) {
-        this.dep = new Dep()
-        for (let key in data) {
-            data[key] = observe(data[key])
-        }
-        return this.proxy(data)
-    }
-    proxy(data) {
-        let dep = this.dep
-        return new Proxy(data, {
-            get: (target, prop, receiver) => {
-                if (Dep.target) {
-                    dep.addSub(Dep.target)
-                }
-                return Reflect.get(target, prop, receiver)
-            },
-            set: (target, prop, value) => {
-                const result = Reflect.set(target, prop, observe(value))
-                dep.notify()
-                return result
-            }
-        })
-    }
-}
+import deepProxy from './deepProxy';
 
 class Databind {
     constructor(el, data) {
@@ -36,27 +12,20 @@ class Databind {
     init() {
         this.el.querySelectorAll('[data-bind]').forEach((ele, index) => {
             const key = ele.getAttribute('data-bind');
-            this.refreshDom(ele, this.data[key]);
+            const arrKey = key.split('.');// 'a.b.c' => ['a', 'b', 'c']
+            this.refreshDom(ele, arrKey.reduce((val, item) => val[item], this.data), this.data[key]);
         });
     }
     register() {
-        const that = this;
-        this.proxy = data => new Proxy(data, {
-            get(target, key, receiver) {
-                return Reflect.get(target, key, receiver);
-            },
-            set(target, key, value, receiver) {
-                that.el.querySelectorAll('[data-bind]').forEach((ele, index) => {
-                    if (ele.getAttribute('data-bind') === key && target[key] !== value) {
-                        that.refreshDom(ele, value);
-                    }
-                });
-                return Reflect.set(target, key, value, receiver);
-            },
-            deleteProperty(target, key) {
-                return Reflect.deleteProperty(target, key);
-            }
-        });
+        this.proxy = deepProxy(this.data, (directAttrValue, value) => {
+            this.el.querySelectorAll('[data-bind]').forEach(ele => {
+                const key = ele.getAttribute('data-bind');
+                if (directAttrValue === key) {
+                    this.refreshDom(ele, value);
+
+                }
+            });
+        }, this.refreshDom);
         this.inputBind();
     }
     inputBind() { // 输入框值变化更新对象值
@@ -70,34 +39,12 @@ class Databind {
         });
     }
     refreshDom(ele, value) {
-        if (ele.nodeName === 'INPUT' || ele.nodeName === 'TEXTAREA' || ele.nodeName === 'SELECT') {
+        if (ele.nodeType === 1) {
             ele.value = value;
-        } else {
-            ele.innerText = value;
+        } else if (node.nodeType === 3) {
+            ele.textContent = value;
         }
     }
 }
 
-//是不是一个pure object,意思就是object里面没有再嵌套object了
-function isPureObject(object) {
-    if (typeof object !== 'object') {
-        return false;
-    } else {
-        for (let prop in object) {
-            if (typeof object[prop] == 'object') {
-                return false;
-            }
-        }
-    }
-    return true;
-}
-
-const proxy = new Proxy({ a: 1, o: { aa: 1, bb: 2 } }, {
-    get(target, key, receiver) {
-        return Reflect.get(target, key, receiver);
-    },
-    set(target, key, value, receiver) {
-        console.log(3333);
-        return Reflect.set(target, key, value, receiver);
-    },
-})
+export default Databind;
