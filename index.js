@@ -1,4 +1,4 @@
-import deepProxy from './deepProxy';
+import deepProxy, { setValue } from './deepProxy';
 
 class Databind {
     constructor(el, data) {
@@ -25,15 +25,18 @@ class Databind {
 
                 }
             });
-        }, this.refreshDom);
+        });
         this.inputBind();
     }
     inputBind() { // 输入框值变化更新对象值
         this.el.querySelectorAll('[data-bind]').forEach((ele, index) => {
             const key = ele.getAttribute('data-bind');
-            if (ele.nodeName === 'INPUT' || ele.nodeName === 'TEXTAREA' || ele.nodeName === 'SELECT') {
+            const arrKey = key.split('.');// 'a.b.c' => ['a', 'b', 'c']
+            if (ele.nodeType === 1) {
                 ele.addEventListener('input', (e) => {
-                    this.proxy[key] = e.target.value;
+                    setValue(() => {
+                        eval(`this.proxy.${key} = e.target.value`);// this.proxy.a.b.c = value;
+                    });
                 });
             }
         });
