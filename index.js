@@ -31,11 +31,10 @@ class Databind {
     inputBind() { // 输入框值变化更新对象值
         this.el.querySelectorAll('[data-bind]').forEach((ele, index) => {
             const key = ele.getAttribute('data-bind');
-            const arrKey = key.split('.');// 'a.b.c' => ['a', 'b', 'c']
             if (ele.nodeType === 1) {
                 ele.addEventListener('input', (e) => {
                     setValue(() => {
-                        eval(`this.proxy.${key} = e.target.value`);// this.proxy.a.b.c = value;
+                        eval(`this.proxy.${key} = e.target.value`);// this.proxy.a.b.c = value; 
                     });
                 });
             }
