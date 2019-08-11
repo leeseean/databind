@@ -52,9 +52,10 @@ module.exports = {
 
 	output: {
 		// filename: '[name].[chunkhash].js',
-		filename: '[name].min.js',
+        filename: '[name].min.js',
         path: path.resolve(__dirname, 'dist'),
-        libraryTarget: 'umd'
+        libraryTarget: 'umd',
+        umdNamedDefine: true
 	},
 
 	plugins: [new webpack.ProgressPlugin(), new HtmlWebpackPlugin()],

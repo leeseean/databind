@@ -1,6 +1,6 @@
 const arr = [];// 这个数组存放'a.b.c'中的a,b,c
 let flag = false;
-export function setValue(fn) {//设置值必须调用这个方法才能正确生成对应data-bind属性值的arr值
+function setValue(fn) {//设置值必须调用这个方法才能正确生成对应data-bind属性值的arr值
     flag = true;
     fn();
     flag = false;
@@ -37,4 +37,7 @@ function deepProxy(obj, callback) {
     return proxy;
 }
 
-export default deepProxy;
+module.exports = {
+    deepProxy,
+    setValue
+};

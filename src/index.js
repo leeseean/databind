@@ -1,6 +1,8 @@
-import deepProxy, { setValue } from './deepProxy';
+const {
+    deepProxy, setValue
+} = require('./deepProxy');
 
-class Databind {
+class CreateProxy {
     constructor(el, data) {
         if (!el) throw '找不到挂载的dom';
         this.el = el;
@@ -49,4 +51,4 @@ class Databind {
     }
 }
 
-export default Databind;
+module.exports = {setValue, CreateProxy};

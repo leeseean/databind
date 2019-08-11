@@ -16,14 +16,14 @@
             padding: 20px;
         }
     </style>
-    <script src="../index.js"></script>
+    <script src="../dist/databind.min.js"></script>
 </head>
 
 <body>
     <div id="example">
         <div>
-            <input data-bind="aaa" type="text">
-            <span data-bind="aaa"></span>
+            <input data-bind="aaa.q" type="text">
+            <span data-bind="aaa.q"></span>
         </div>
         <div>
             <select data-bind="ccc" id="">
