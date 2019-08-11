@@ -1,8 +1,8 @@
 {
   "name": "databind",
   "version": "1.0.0",
-  "description": "My webpack project",
-  "main": "index.js",
+  "description": "databind plugin",
+  "main": "dist/databind.min.js",
   "dependencies": {},
   "devDependencies": {
     "@babel/core": "^7.5.5",

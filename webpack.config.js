@@ -44,14 +44,15 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
  */
 
 module.exports = {
-	mode: 'development',
+	mode: 'production',
 
 	entry: {
-		comma: './src/comma.js'
+		databind: './src/index.js'
 	},
 
 	output: {
-		filename: '[name].[chunkhash].js',
+		// filename: '[name].[chunkhash].js',
+		filename: '[name].min.js',
         path: path.resolve(__dirname, 'dist'),
         libraryTarget: 'umd'
 	},
