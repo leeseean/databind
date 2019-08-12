@@ -15,8 +15,12 @@ function _proxy(obj, callback = () => { }) {
         },
         set(targte, key, value) {
             const result = Reflect.set(targte, key, value);
-            arrOfStoreKey.push(key);
-            callback(arrOfStoreKey.join('.'), value);
+            if (flag) {
+                arrOfStoreKey.push(key);
+            }
+            if (arrOfStoreKey.length > 0) {
+                callback(arrOfStoreKey.join('.'), value);
+            }
             arrOfStoreKey.length = 0;
             return result;
         }
