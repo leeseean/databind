@@ -47,7 +47,8 @@ module.exports = {
 	mode: 'production',
 
 	entry: {
-		databind: './src/index.js'
+        databind: './src/index.js',
+        demo: './demo/demo.js'
 	},
 
 	output: {
@@ -58,7 +59,10 @@ module.exports = {
         umdNamedDefine: true
 	},
 
-	plugins: [new webpack.ProgressPlugin(), new HtmlWebpackPlugin()],
+	plugins: [new webpack.ProgressPlugin(), new HtmlWebpackPlugin({
+        filename: 'index.html',
+        template: './demo/index.html'
+    })],
 
 	module: {
 		rules: [

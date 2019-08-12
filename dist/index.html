@@ -1,9 +1,38 @@
 <!DOCTYPE html>
-<html>
-  <head>
+<html lang="en">
+
+<head>
     <meta charset="UTF-8">
-    <title>Webpack App</title>
-  </head>
-  <body>
-  <script type="text/javascript" src="databind.min.js"></script></body>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>demo</title>
+    <style>
+        #example {
+            display: flex;
+            flex-wrap: wrap;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100px;
+            padding: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="example">
+        <div>
+            <input data-bind="aaa.q" type="text">
+            <span data-bind="aaa.q"></span>
+        </div>
+        <div>
+            <select data-bind="ccc" id="">
+                <option value="1">1</option>
+                <option value="2">2</option>
+            </select>
+            <span data-bind="ccc"></span>
+        </div>
+        <div data-bind="ddd"></div>
+    </div>
+<script type="text/javascript" src="databind.min.js"></script><script type="text/javascript" src="demo.min.js"></script></body>
+
 </html>
