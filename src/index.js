@@ -43,9 +43,9 @@ class CreateProxy {
         });
     }
     refreshDom(ele, value) {
-        if (ele.nodeType === 1) {
+        if (ele.nodeName === 'INPUT' || ele.nodeName === 'SELECT' || ele.nodeName === 'TEXTAREA') {
             ele.value = value;
-        } else if (node.nodeType === 3) {
+        } else if (ele.nodeType === 3) {
             ele.textContent = value;
         }
     }
